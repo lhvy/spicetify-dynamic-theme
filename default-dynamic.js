@@ -1,12 +1,3 @@
-function waitForElement(els, func, timeout = 100) {
-  const queries = els.map((el) => document.querySelector(el));
-  if (queries.every((a) => a)) {
-    func(queries);
-  } else if (timeout > 0) {
-    setTimeout(waitForElement, 300, els, func, --timeout);
-  }
-}
-
 function getAlbumInfo(uri) {
   return Spicetify.CosmosAsync.get(`https://api.spotify.com/v1/albums/${uri}`);
 }
@@ -139,7 +130,6 @@ async function songchange() {
     return setTimeout(songchange, 300);
 
   try {
-    // warning popup
     if (Spicetify.Platform.PlatformData.client_version_triple < "1.1.68")
       Spicetify.showNotification(
         `Your version of Spotify ${Spicetify.Platform.PlatformData.client_version_triple}) is un-supported`
@@ -152,7 +142,7 @@ async function songchange() {
   let bgImage = Spicetify.Player.data.track.metadata.image_url;
   if (bgImage === undefined) {
     bgImage = "/images/tracklist-row-song-fallback.svg";
-    textColor = "#509bf5";
+    textColor = "#1db954";
     updateColors(textColor);
   }
 
@@ -179,7 +169,7 @@ Spicetify.Player.addEventListener("songchange", songchange);
 function pickCoverColor(img) {
   if (!img.currentSrc.startsWith("spotify:")) return;
   if (img.complete) {
-    textColor = "#509bf5";
+    textColor = "#1db954";
     var swatches = new Vibrant(img, 12).swatches();
     cols = ["Vibrant", "LightVibrant", "Muted", "DarkVibrant"];
     for (var col in cols)
