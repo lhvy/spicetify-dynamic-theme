@@ -11,12 +11,6 @@ function getAlbumInfo(uri) {
   return Spicetify.CosmosAsync.get(`https://api.spotify.com/v1/albums/${uri}`);
 }
 
-function isLight(hex) {
-  var [r, g, b] = hexToRgb(hex).map(Number);
-  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-  return brightness > 128;
-}
-
 function hexToRgb(hex) {
   var bigint = parseInt(hex.replace("#", ""), 16);
   var r = (bigint >> 16) & 255;
@@ -112,35 +106,26 @@ function setRootColor(name, colHex) {
   root.style.setProperty("--spice-rgb-" + name, hexToRgb(colHex).join(","));
 }
 
-function toggleDark(setDark) {
-  if (setDark === undefined) setDark = isLight(textColorBg);
-
-  document.documentElement.style.setProperty("--is_light", setDark ? 0 : 1);
-  textColorBg = setDark ? "#0A0A0A" : "#FAFAFA";
-
+function toggleDark() {
+  // FIXME: This needs to run once at startup.
+  textColorBg = "#0A0A0A";
   setRootColor("main", textColorBg);
   setRootColor("sidebar", textColorBg);
   setRootColor("player", textColorBg);
-  setRootColor("card", setDark ? "#040404" : "#ECECEC");
-  setRootColor("subtext", setDark ? "#EAEAEA" : "#3D3D3D");
-  setRootColor("notification", setDark ? "#303030" : "#DDDDDD");
+  setRootColor("card", "#040404");
+  setRootColor("subtext", "#EAEAEA");
+  setRootColor("notification", "#303030");
 
   updateColors(textColor);
 }
-
-/* Init with current system light/dark mode */
-let systemDark = true;
-toggleDark(systemDark);
+toggleDark();
 
 function updateColors(textColHex) {
   if (textColHex == undefined) return registerCoverListener();
 
-  let isLightBg = isLight(textColorBg);
-  if (isLightBg) textColHex = lightenDarkenColor(textColHex, -15); // vibrant color is always too bright for white bg mode
-
-  let darkColHex = lightenDarkenColor(textColHex, isLightBg ? 12 : -20);
-  let darkerColHex = lightenDarkenColor(textColHex, isLightBg ? 30 : -40);
-  let buttonBgColHex = setLightness(textColHex, isLightBg ? 0.9 : 0.14);
+  let darkColHex = lightenDarkenColor(textColHex, -20);
+  let darkerColHex = lightenDarkenColor(textColHex, -40);
+  let buttonBgColHex = setLightness(textColHex, 0.14);
   setRootColor("text", textColHex);
   setRootColor("button", darkerColHex);
   setRootColor("button-active", darkColHex);
@@ -196,9 +181,7 @@ function pickCoverColor(img) {
   if (img.complete) {
     textColor = "#509bf5";
     var swatches = new Vibrant(img, 12).swatches();
-    cols = isLight(textColorBg)
-      ? ["Vibrant", "DarkVibrant", "Muted", "LightVibrant"]
-      : ["Vibrant", "LightVibrant", "Muted", "DarkVibrant"];
+    cols = ["Vibrant", "LightVibrant", "Muted", "DarkVibrant"];
     for (var col in cols)
       if (swatches[cols[col]]) {
         textColor = swatches[cols[col]].getHex();
@@ -220,7 +203,7 @@ function registerCoverListener() {
     coverListener = null;
   }
 
-  coverListener = new MutationObserver((muts) => {
+  coverListener = new MutationObserver((_) => {
     const img = document.querySelector(".main-image-image.cover-art-image");
     if (!img) return registerCoverListener();
     pickCoverColor(img);
