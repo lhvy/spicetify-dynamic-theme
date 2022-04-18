@@ -32,13 +32,13 @@ curl -fsSL https://raw.githubusercontent.com/JulienMaille/spicetify-dynamic-them
 3. Copy `default-dynamic.js` to your [Spicetify/Extensions folder](https://github.com/khanhas/spicetify-cli/wiki/Extensions#installing)
 4. Add the 2 lines in `[Patch]` section of the config file (see details below)
 5. Run:
-    ```
-    spicetify config extensions default-dynamic.js extensions Vibrant.min.js
-    spicetify config current_theme DefaultDynamic
-    spicetify config color_scheme base
-    spicetify config inject_css 1 replace_colors 1 overwrite_assets 1
-    spicetify apply
-    ```
+   ```
+   spicetify config extensions default-dynamic.js extensions Vibrant.min.js
+   spicetify config current_theme DefaultDynamic
+   spicetify config color_scheme base
+   spicetify config inject_css 1 replace_colors 1 overwrite_assets 1
+   spicetify apply
+   ```
 
 ## IMPORTANT!
 
@@ -48,15 +48,6 @@ From Spotify > v1.1.62, in sidebar, they use an adaptive render mechanic to acti
 [Patch]
 xpui.js_find_8008 = ,(\w+=)32,
 xpui.js_repl_8008 = ,${1}28,
-```
-
-## Follow system dark/light theme (PowerShell)
-
-Automatic dark mode should work on MacOs and Linux out of the box.
-From Spotify > v1.1.70, dark mode is forced in Windows builds. You will need to patch Spotify.exe using this script:
-
-```powershell
-Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/JulienMaille/spicetify-dynamic-theme/master/patch-dark-mode.ps1" | Invoke-Expression
 ```
 
 ## Hide Window Controls:
@@ -83,7 +74,7 @@ curl -fsSL https://raw.githubusercontent.com/JulienMaille/spicetify-dynamic-them
 
 1. Remove Patch lines you added in config file earlier.
 2. Run:
-    ```
-    spicetify config current_theme " " color_scheme " " extensions default-dynamic.js- extensions Vibrant.min.js-
-    spicetify apply
-    ```
+   ```
+   spicetify config current_theme " " color_scheme " " extensions default-dynamic.js- extensions Vibrant.min.js-
+   spicetify apply
+   ```

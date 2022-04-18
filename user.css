@@ -1,43 +1,9 @@
 :root {
-    --image_url: "";
     --is_light: 0;
     --transition: linear 0.35s;
     /* You can darken (eg. -20) or lighten (eg. +20) the main color*/
     --custom_darken: -5;
     --system_is_dark: 1;
-    --warning_message: "You haven't installed 'default-dynamic.js' extension. Please follow instructions on the README page.";
-}
-
-div.ReactModalPortal:last-of-type::before {
-    font-size: 30px;
-    content: var(--warning_message);
-}
-
-@media (prefers-color-scheme: light) {
-    :root {
-        --system_is_dark: 0;
-    }
-}
-
-/* jost-regular - latin_cyrillic */
-@font-face {
-    font-family: "Jost";
-    font-style: normal;
-    font-weight: 400;
-    src: url("./glue-resources/fonts/jost-v6-latin_cyrillic-regular.woff2") format("woff2");
-}
-/* jost-500 - latin_cyrillic */
-@font-face {
-    font-family: "Jost";
-    font-style: normal;
-    font-weight: 600;
-    src: url("./glue-resources/fonts/jost-v6-latin_cyrillic-500.woff2") format("woff2");
-}
-
-body,
-button,
-input {
-    font-family: "Jost", "spotify-circular", "spotify-circular-cyrillic", "spotify-circular-arabic", "spotify-circular-hebrew", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .main-rootlist-rootlistDividerGradient {
@@ -145,28 +111,6 @@ span.artist-artistVerifiedBadge-badge svg:nth-child(1) {
 .artist-artistOverview-overview .main-entityHeader-withBackgroundImage h1 {
     font-size: 175px !important;
     line-height: 175px !important;
-}
-
-/* translucid background cover */
-.Root__top-container::before {
-    content: "";
-    background-image: var(--image_url);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    position: fixed;
-    display: block;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    filter: blur(15px);
-    pointer-events: none;
-    backface-visibility: hidden;
-    will-change: transform;
-    transition: background-image var(--transition);
-    opacity: calc(0.07 + 0.03 * var(--is_light, 0));
-    z-index: +4;
 }
 
 /* context menu */

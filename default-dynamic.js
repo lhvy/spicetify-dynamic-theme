@@ -1,5 +1,3 @@
-let current = "3.6";
-
 function waitForElement(els, func, timeout = 100) {
   const queries = els.map((el) => document.querySelector(el));
   if (queries.every((a) => a)) {
@@ -131,40 +129,8 @@ function toggleDark(setDark) {
 }
 
 /* Init with current system light/dark mode */
-let systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+let systemDark = true;
 toggleDark(systemDark);
-
-window
-  .matchMedia("(prefers-color-scheme: dark)")
-  .addEventListener("change", (e) => {
-    toggleDark(e.matches);
-  });
-
-waitForElement([".main-topBar-container"], (queries) => {
-  // Add activator on top bar
-  const div = document.createElement("div");
-  div.id = "main-topBar-moon-div";
-  div.classList.add(
-    "main-topBarStatusIndicator-TopBarStatusIndicatorContainer"
-  );
-  queries[0].insertBefore(
-    div,
-    queries[0].querySelector(".main-userWidget-box")
-  );
-
-  const button = document.createElement("button");
-  button.id = "main-topBar-moon-button";
-  button.classList.add(
-    "main-noConnection-button",
-    "main-topBarStatusIndicator-hasTooltip"
-  );
-  button.setAttribute("title", "Light/Dark");
-  button.onclick = () => {
-    toggleDark();
-  };
-  button.innerHTML = `<svg role="img" viewBox="0 0 16 16" height="16" width="16"><path fill="currentColor" d="M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z"></path></svg>`;
-  div.append(button);
-});
 
 function updateColors(textColHex) {
   if (textColHex == undefined) return registerCoverListener();
@@ -183,10 +149,10 @@ function updateColors(textColHex) {
   setRootColor("button-disabled", buttonBgColHex);
 }
 
-let nearArtistSpanText = "";
 async function songchange() {
   if (!document.querySelector(".main-trackInfo-container"))
     return setTimeout(songchange, 300);
+
   try {
     // warning popup
     if (Spicetify.Platform.PlatformData.client_version_triple < "1.1.68")
@@ -206,36 +172,13 @@ async function songchange() {
   }
 
   if (album_uri !== undefined && !album_uri.includes("spotify:show")) {
-    const albumInfo = await getAlbumInfo(
-      album_uri.replace("spotify:album:", "")
-    );
-    let album_date = new Date(albumInfo.release_date);
-    let recent_date = new Date();
-    recent_date.setMonth(recent_date.getMonth() - 6);
-    album_date = album_date.toLocaleString(
-      "default",
-      album_date > recent_date
-        ? { year: "numeric", month: "short" }
-        : { year: "numeric" }
-    );
-    nearArtistSpanText = `
-            <span>
-                <span draggable="true">
-                    <a draggable="false" dir="auto" href="${album_uri}">${Spicetify.Player.data.track.metadata.album_title}</a>
-                </span>
-            </span>
-            <span> • ${album_date}</span>
-        `;
+    await getAlbumInfo(album_uri.replace("spotify:album:", ""));
   } else if (Spicetify.Player.data.track.uri.includes("spotify:episode")) {
     // podcast
-    bgImage = bgImage.replace("spotify:image:", "https://i.scdn.co/image/");
-    nearArtistSpanText = Spicetify.Player.data.track.metadata.album_title;
   } else if (Spicetify.Player.data.track.metadata.is_local == "true") {
     // local file
-    nearArtistSpanText = Spicetify.Player.data.track.metadata.album_title;
   } else if (Spicetify.Player.data.track.provider == "ad") {
     // ad
-    nearArtistSpanText.innerHTML = "Advertisement";
     return;
   } else {
     // When clicking a song from the homepage, songChange is fired with half empty metadata
@@ -243,25 +186,6 @@ async function songchange() {
     setTimeout(songchange, 200);
   }
 
-  if (!document.querySelector("#main-trackInfo-year")) {
-    waitForElement([".main-trackInfo-container"], (queries) => {
-      nearArtistSpan = document.createElement("div");
-      nearArtistSpan.id = "main-trackInfo-year";
-      nearArtistSpan.classList.add(
-        "main-trackInfo-artists",
-        "standalone-ellipsis-one-line",
-        "main-type-finale"
-      );
-      nearArtistSpan.innerHTML = nearArtistSpanText;
-      queries[0].append(nearArtistSpan);
-    });
-  } else {
-    nearArtistSpan.innerHTML = nearArtistSpanText;
-  }
-  document.documentElement.style.setProperty(
-    "--image_url",
-    `url("${bgImage}")`
-  );
   registerCoverListener();
 }
 
@@ -307,40 +231,3 @@ function registerCoverListener() {
   });
 }
 registerCoverListener();
-
-(function Startup() {
-  if (!Spicetify.showNotification) {
-    setTimeout(Startup, 300);
-    return;
-  }
-  // Check latest release
-  fetch(
-    "https://api.github.com/repos/JulienMaille/spicetify-dynamic-theme/releases/latest"
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      if (data.tag_name > current) {
-        document
-          .querySelector("#main-topBar-moon-div")
-          .classList.add("main-topBarUpdateAvailable");
-        let updateLink = document.createElement("a");
-        updateLink.setAttribute("title", `Changes: ${data.name}`);
-        updateLink.setAttribute(
-          "href",
-          "https://github.com/JulienMaille/spicetify-dynamic-theme/releases/latest"
-        );
-        updateLink.innerHTML = `v${data.tag_name} available`;
-        document.querySelector("#main-topBar-moon-button").append(updateLink);
-      }
-    })
-    .catch((err) => {
-      // Do something for an error here
-    });
-  Spicetify.showNotification(
-    "Applied system " + (systemDark ? "dark" : "light") + " theme."
-  );
-})();
-
-document.documentElement.style.setProperty("--warning_message", " ");
