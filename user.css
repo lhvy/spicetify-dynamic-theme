@@ -1,31 +1,6 @@
-:root {
-    --is_light: 0;
-    --transition: linear 0.35s;
-    /* You can darken (eg. -20) or lighten (eg. +20) the main color*/
-    --custom_darken: -5;
-    --system_is_dark: 1;
-}
-
-.main-rootlist-rootlistDividerGradient {
-    background: unset;
-}
-
 input {
     background-color: unset !important;
-    border-bottom: solid 1px var(--spice-text) !important;
-    border-radius: 0 !important;
-    padding: 6px 10px 6px 48px;
     color: var(--spice-text) !important;
-}
-
-input::placeholder {
-    color: var(--spice-subtext) !important;
-}
-
-input:focus {
-    border-top: none !important;
-    border-left: none !important;
-    border-right: none !important;
 }
 
 .x-searchInput-searchInputSearchIcon,
@@ -37,7 +12,7 @@ input:focus {
     color: white;
 }
 
-/* Remove Topbar background colour */
+/* Remove top bar background colour */
 .main-topBar-background {
     background-color: unset !important;
 }
@@ -54,10 +29,6 @@ input:focus {
 .artist-artistVerifiedBadge-badge svg,
 .main-trackList-playingIcon {
     filter: grayscale(1);
-}
-
-span.artist-artistVerifiedBadge-badge svg:nth-child(1) {
-    fill: black;
 }
 
 .main-navBar-navBarLinkActive {
@@ -90,27 +61,8 @@ span.artist-artistVerifiedBadge-badge svg:nth-child(1) {
     opacity: 0.3;
 }
 
-.main-entityHeader-container.main-entityHeader-withBackgroundImage,
-.main-entityHeader-background,
-.main-entityHeader-background.main-entityHeader-overlay:after {
-    height: 100vh;
-}
-
-.main-entityHeader-withBackgroundImage .main-entityHeader-headerText {
-    justify-content: center;
-}
-
-.main-entityHeader-container.main-entityHeader-nonWrapped.main-entityHeader-withBackgroundImage {
-    padding-left: 9%;
-}
-
 .main-entityHeader-background.main-entityHeader-overlay:after {
     background-image: linear-gradient(transparent, transparent), linear-gradient(var(--spice-main), var(--spice-main));
-}
-
-.artist-artistOverview-overview .main-entityHeader-withBackgroundImage h1 {
-    font-size: 175px !important;
-    line-height: 175px !important;
 }
 
 /* context menu */
@@ -140,12 +92,6 @@ span.artist-artistVerifiedBadge-badge svg:nth-child(1) {
     color: #eeeeee !important;
 }
 
-.collection-collectionEntityHeroCard-likedSongs,
-.collection-collectionEntityHeroCard-likedSongs:focus-within,
-.collection-collectionEntityHeroCard-likedSongs:hover {
-    background: linear-gradient(149.46deg, var(--spice-button), var(--spice-text) 99.16%) !important;
-}
-
 /* spotify dynamic gradients */
 .main-home-homeHeader {
     opacity: 0.3;
@@ -157,11 +103,6 @@ span.artist-artistVerifiedBadge-badge svg:nth-child(1) {
     opacity: 0.15;
     background-color: var(--spice-text) !important;
     filter: grayscale(0.5);
-}
-
-/* play button in playlist table */
-.main-trackList-rowPlayPauseButton {
-    padding: 0px;
 }
 
 .main-trackList-rowPlayPauseButton:hover {
@@ -180,16 +121,6 @@ span.artist-artistVerifiedBadge-badge svg:nth-child(1) {
 .main-entityHeader-title,
 .main-shelf-title,
 .main-type-canon {
-    color: var(--spice-subtext) !important;
-}
-
-/* profile icon */
-.main-entityHeader-imagePlaceholder {
-    color: unset;
-}
-
-/* left menu active item background */
-.main-navBar-navBarLinkActive {
     color: var(--spice-subtext) !important;
 }
 
@@ -230,12 +161,6 @@ span.artist-artistVerifiedBadge-badge svg:nth-child(1) {
     pointer-events: none;
     position: absolute;
     width: 0;
-}
-
-/* buddy shadow */
-.main-buddyFeed-buddyFeed {
-    -webkit-box-shadow: none;
-    box-shadow: none;
 }
 
 /* buddyFeed color fix */
@@ -290,36 +215,13 @@ option {
     background-color: rgba(var(--spice-rgb-subtext), 0.6) !important;
 }
 
-/* save vertical space in left menu */
-.spotify__container--is-desktop:not(.fullscreen) .main-navBar-entryPoints {
-    padding-top: 12px;
-}
-
-.main-navBar-navBarLink {
-    height: 34px;
-}
-
-.main-rootlist-rootlist {
-    margin-top: 6px;
-}
-
-.main-createPlaylistButton-button,
-.main-collectionLinkButton-collectionLinkButton {
-    padding-top: 3px;
-    padding-bottom: 4px;
-}
-
 .main-rootlist-rootlistDivider {
-    background-color: unset;
+    background-color: rgba(var(--spice-rgb-subtext), 0.2) !important;
 }
 
-/* Hightlight selected playlist */
+/* Display selected playlist */
 .main-rootlist-rootlistItemLink.main-rootlist-rootlistItemLinkActive {
-    color: var(--spice-subtext);
-    background-color: rgba(var(--spice-rgb-button), 0.5);
-    border-radius: 4px;
-    padding: 0 16px;
-    margin: 0 -16px;
+    color: var(--spice-text);
 }
 
 /* Menu item hover */
@@ -330,11 +232,6 @@ option {
 
 .main-contextMenu-menuItemButton {
     color: var(--spice-subtext);
-}
-
-/* bookmark extension */
-.bookmark-menuitem {
-    padding: 5px !important;
 }
 
 .bookmark-menuitem:hover {
@@ -364,17 +261,6 @@ option {
     background-color: rgba(var(--spice-rgb-subtext), 0.3) !important;
 }
 
-/* same border radius on all 3 icons (playlist, liked, podcasts) */
-.main-yourEpisodesButton-yourEpisodesIcon {
-    border-radius: 4px;
-}
-
-/* explicit lyrics icon */
-.main-tag-container {
-    color: var(--spice-subtext);
-    background-color: rgba(var(--spice-rgb-subtext), 0.2) !important;
-}
-
 /* playlist top buttons */
 .os-viewport button:not(.main-playButton-primary) {
     color: var(--spice-subtext) !important;
@@ -383,37 +269,37 @@ option {
 /* smooth color transitions */
 @property --spice-sidebar {
     syntax: "<color>";
-    initial-value: magenta;
+    initial-value: #1db954;
     inherits: true;
 }
 
 @property --spice-main {
     syntax: "<color>";
-    initial-value: magenta;
+    initial-value: #1db954;
     inherits: true;
 }
 
 @property --spice-text {
     syntax: "<color>";
-    initial-value: magenta;
+    initial-value: #1db954;
     inherits: true;
 }
 
 @property --spice-subtext {
     syntax: "<color>";
-    initial-value: magenta;
+    initial-value: #1db954;
     inherits: true;
 }
 
 @property --spice-button {
     syntax: "<color>";
-    initial-value: magenta;
+    initial-value: #1db954;
     inherits: true;
 }
 
 @property --spice-player {
     syntax: "<color>";
-    initial-value: magenta;
+    initial-value: #1db954;
     inherits: true;
 }
 
