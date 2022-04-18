@@ -70,12 +70,6 @@ input {
     border: 1px solid var(--spice-tab-active);
 }
 
-/* notification toaster */
-.main-notificationBubbleContainer-NotificationBubbleContainer .main-notificationBubble-NotificationBubble {
-    color: #ffffff;
-    background-color: var(--spice-button);
-}
-
 /* collection card shown in library */
 .main-heroCard-draggable,
 .main-heroCard-draggable a,
@@ -143,24 +137,6 @@ input {
 .main-userWidget-box,
 .main-topBar-historyButtons .main-topBar-button {
     background-color: var(--spice-notification);
-}
-
-/* bubble arrow */
-.main-notificationBubble-NotificationBubble {
-    border: 1px solid var(--spice-text);
-}
-
-.main-notificationBubble-withTopRightPointer:before {
-    right: 32px;
-    top: -17px;
-    border: 8px solid transparent;
-    border-bottom-color: var(--spice-text);
-    bottom: 100%;
-    content: "";
-    height: 0;
-    pointer-events: none;
-    position: absolute;
-    width: 0;
 }
 
 /* buddyFeed color fix */
