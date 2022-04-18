@@ -61,8 +61,7 @@ curl -fsSL https://raw.githubusercontent.com/JulienMaille/spicetify-dynamic-them
 
 ### Manual Uninstall
 
-1. Run:
-   ```
-   spicetify config current_theme " " color_scheme " " extensions default-dynamic.js- extensions Vibrant.min.js-
-   spicetify apply
-   ```
+```
+spicetify config current_theme " " color_scheme " " extensions default-dynamic.js- extensions Vibrant.min.js-
+spicetify apply
+```
