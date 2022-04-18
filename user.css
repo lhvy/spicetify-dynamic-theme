@@ -264,11 +264,6 @@ option {
     --lyrics-color-inactive: var(--spice-main) !important;
 }
 
-/* available update text */
-.main-topBarUpdateAvailable {
-    max-width: unset;
-}
-
 /* playlist header */
 .main-duration-container,
 .main-entityHeader-metaDataText,
@@ -301,7 +296,7 @@ option {
 }
 
 .main-navBar-navBarLink {
-    height: 34px; /* try 32px */
+    height: 34px;
 }
 
 .main-rootlist-rootlist {
@@ -312,10 +307,6 @@ option {
 .main-collectionLinkButton-collectionLinkButton {
     padding-top: 3px;
     padding-bottom: 4px;
-}
-
-.main-rootlist-rootlist {
-    --left-sidebar-item-height: 28px; /* try 26px */
 }
 
 .main-rootlist-rootlistDivider {

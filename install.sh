@@ -2,27 +2,7 @@
 
 set -e
 
-echo "Patching (1/4)"
-PATCH='[Patch]
-xpui.js_find_8008 = ,(\\w+=)32,
-xpui.js_repl_8008 = ,\${1}28,'
-cd "$(dirname "$(spicetify -c)")"
-if cat config-xpui.ini | grep -o '\[Patch\]'; then
-    while true; do
-        read -p "Existing Spicetify patches will be overwritten. Do you wish to continue? [y/n] " yn </dev/tty
-        case $yn in
-        [Yy]*) break ;;
-        [Nn]*) exit ;;
-        *) echo "Please answer yes or no." ;;
-        esac
-    done
-
-    perl -i -0777 -pe "s/\[Patch\].*?($|(\r*\n){2})/${PATCH}\n\n/s" config-xpui.ini
-else
-    echo "\n${PATCH}" >>config-xpui.ini
-fi
-
-echo "Finding lastest version (2/4)"
+echo "Finding lastest version (1/3)"
 if [ $# -eq 0 ]; then
     latest_release_uri="https://api.github.com/repos/JulienMaille/spicetify-dynamic-theme/releases/latest"
     version=$(command curl -sSf "$latest_release_uri" |
@@ -33,7 +13,7 @@ else
     version="${1}"
 fi
 
-echo "Downloading v${version} (3/4)"
+echo "Downloading v${version} (2/3)"
 # Setup directories to download to
 theme_dir="$(dirname "$(spicetify -c)")/Themes/DefaultDynamic"
 ext_dir="$(dirname "$(spicetify -c)")/Extensions"
@@ -48,7 +28,7 @@ curl --progress-bar --output "${theme_dir}/user.css" "https://raw.githubusercont
 curl --progress-bar --output "${ext_dir}/default-dynamic.js" "https://raw.githubusercontent.com/JulienMaille/spicetify-dynamic-theme/${version}/default-dynamic.js"
 curl --progress-bar --output "${ext_dir}/Vibrant.min.js" "https://raw.githubusercontent.com/JulienMaille/spicetify-dynamic-theme/${version}/Vibrant.min.js"
 
-echo "Applying theme (4/4)"
+echo "Applying theme (3/3)"
 spicetify config extensions dribbblish.js- extensions dribbblish-dynamic.js-
 spicetify config extensions default-dynamic.js extensions Vibrant.min.js
 spicetify config current_theme DefaultDynamic color_scheme base

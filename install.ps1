@@ -98,24 +98,6 @@ if ($PSVersionTable.PSVersion.Major -gt $PSMinVersion) {
   spicetify config inject_css 1 replace_colors 1 overwrite_assets 1
   Write-Done
 
-  # Add patch
-  Write-Part "PATCHING       "; Write-Emphasized "config-xpui.ini"
-  $configFile = Get-Content "$spicePath\config-xpui.ini"
-  if (-not ($configFile -match "xpui.js_find_8008")) {
-    $rep = @"
-[Patch]
-xpui.js_find_8008=,(\w+=)32,
-xpui.js_repl_8008=,`${1}28,
-"@
-    # In case missing Patch section
-    if (-not ($configFile -match "\[Patch\]")) {
-      $configFile += "`n[Patch]`n"
-    }
-    $configFile = $configFile -replace "\[Patch\]",$rep
-    Set-Content "$spicePath\config-xpui.ini" $configFile
-  }
-  Write-Done
-
   Write-Part "APPLYING";
   $backupVer = $configFile -match "^version"
   $version = ConvertFrom-StringData $backupVer[0]

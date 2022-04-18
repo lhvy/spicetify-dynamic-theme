@@ -4,24 +4,11 @@ set -e
 
 cd "$(dirname "$(spicetify -c)")"
 
-echo "Unpatching (1/3)"
-if cat config-xpui.ini | grep -o '\[Patch\]'; then
-    while true; do
-        read -p "All Spicetify custom patches will be deleted. Is this ok? [y/n] " yn </dev/tty
-        case $yn in
-        [Yy]*) break ;;
-        [Nn]*) exit ;;
-        *) echo "Please answer yes or no." ;;
-        esac
-    done
-    perl -i -0777 -pe "s/\[Patch\].*?($|(\r*\n){2})//s" config-xpui.ini
-fi
-
-echo "Uninstalling (2/3)"
+echo "Uninstalling (1/2)"
 cd "$(dirname "$(spicetify -c)")"
 spicetify config current_theme "SpicetifyDefault" color_scheme "green-dark" extensions default-dynamic.js- extensions Vibrant.min.js-
 
-echo "Deleting (3/3)"
+echo "Deleting (2/2)"
 while true; do
     read -p "Do you wish to delete theme files? [y/n] " yn </dev/tty
     case $yn in

@@ -30,8 +30,7 @@ curl -fsSL https://raw.githubusercontent.com/JulienMaille/spicetify-dynamic-them
 1. Download the latest [Source code (zip)](https://github.com/JulienMaille/spicetify-dynamic-theme/releases/latest)
 2. Extract the files to your [Spicetify/Themes folder](https://github.com/khanhas/spicetify-cli/wiki/Customization#themes) (rename the zipped folder to `DefaultDynamic`)
 3. Copy `default-dynamic.js` to your [Spicetify/Extensions folder](https://github.com/khanhas/spicetify-cli/wiki/Extensions#installing)
-4. Add the 2 lines in `[Patch]` section of the config file (see details below)
-5. Run:
+4. Run:
    ```
    spicetify config extensions default-dynamic.js extensions Vibrant.min.js
    spicetify config current_theme DefaultDynamic
@@ -39,16 +38,6 @@ curl -fsSL https://raw.githubusercontent.com/JulienMaille/spicetify-dynamic-them
    spicetify config inject_css 1 replace_colors 1 overwrite_assets 1
    spicetify apply
    ```
-
-## IMPORTANT!
-
-From Spotify > v1.1.62, in sidebar, they use an adaptive render mechanic to actively show and hide items on scroll. It helps reducing number of items to render, hence there is significant performance boost if you have a large playlists collection. But the drawbacks is that item height is hard-coded, it messes up user interaction when we explicitly change, in CSS, playlist item height bigger than original value. So you need to add these 2 lines in Patch section in config file:
-
-```ini
-[Patch]
-xpui.js_find_8008 = ,(\w+=)32,
-xpui.js_repl_8008 = ,${1}28,
-```
 
 ## Hide Window Controls:
 
@@ -72,8 +61,7 @@ curl -fsSL https://raw.githubusercontent.com/JulienMaille/spicetify-dynamic-them
 
 ### Manual Uninstall
 
-1. Remove Patch lines you added in config file earlier.
-2. Run:
+1. Run:
    ```
    spicetify config current_theme " " color_scheme " " extensions default-dynamic.js- extensions Vibrant.min.js-
    spicetify apply
